@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .rojo {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <form>
+        <label>Contenido:</label>
+        <input type="text" id="cajaContenido" /><br />
+        <button type="button" id="botonCreacion">Crear título</button>
+    </form>
+    <div id="padre"></div>
+    <script>
+        $(document).ready(function () {
+            $("#botonCreacion").click(function () {
+                var texto = $("#cajaContenido").val();
+                var h1 = $("<h1>");
+                h1.text(texto);
+                h1.css("background-color", "green");
+                h1.css("color", "white");
+                $("#padre").append(h1);
+                /* SI QUEREMOS HACER TODO EN UN PASO UTILIZAMOS SINTAXIS JSON
+                 * var h1 = $("<h1>", {"text": TEXTO, "style": "background-color:blue;color: white"})
+                 CON EL APPENDTO PODRIAMOS AGREGAR DEL HIJO AL PADRE*/
+                // PARA VER SI LOS EVENTOS SE AGREGAN DINÁMICAMENTE
+                h1.click(function () {
+                    alert("Martes y trece");
+                });
+                // SOLAMENTE ENTRAN EN EL JUEGO DE EVENTOS LOS OBJETOS DIBUJADOS EN LA CARGA DE LA PÁGINA
+                // SI DESEAMOS QUE LOS ELEMENTOS TENGAN EVENTOS TENDREMOS QUE REALIZAR METODOS DELEGADOS
+                // (EVENT HANDLRER) PARA EL OBJETO CREADO
+                // DOS SINTAXIS, 1 - CON on.
+                //h1.on("click", function () {
+                //    $(this).text("Texto cambiado");
+                //});
+                //h1.click(function () {
+                //    $(this).text("Texto cambiado");
+                //});
+            });
+        });
+    </script>
+</body>
+</html>

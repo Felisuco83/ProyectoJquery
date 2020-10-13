@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .rojo {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <input type="range" min="1" max="20" id="rango" />
+    <label id="numeroImagenes"></label>
+    <div id="imgContainer">
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#rango").change(function () {
+                $contenedor = $("#imgContainer");
+                $contenedor.empty();
+                var numImg = parseInt($(this).val());
+                $("#numeroImagenes").text(numImg.toString());
+                for (var i = 0; i < numImg; i++) {
+                    var img = $("<img>", { "src": "Images/bandera_españa.jpg" });
+                    img.mouseover(function () {
+                        $(this).attr("src","Images/escudo_madrid.jpg");
+                    });
+                    img.appendTo($contenedor);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
