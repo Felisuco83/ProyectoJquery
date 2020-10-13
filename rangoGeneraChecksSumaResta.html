@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .rojo {
+            background-color: red;
+        }
+
+        .verde {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <input type="range" id="rango" min="1" max="10"/>
+    <label id="numRango"></label>
+    <div id="contenedorChk"></div>
+    <h1 id="resultado"></h1>
+    <script type="text/javascript">
+        var suma = 0;
+        $(document).ready(function () {
+            $("input[type=range]").change(function () {
+                $("#contenedorChk").empty();
+                $("#resultado").text("");
+                suma = 0;
+                $("#numRango").text($(this).val());
+                for (var i = 0; i < parseInt($(this).val()); i++){
+                    var rnd = Math.floor(Math.random() * (99 - 1)) + 1;
+                    var chk = $("<input>", { "type": "checkbox", "value": rnd });
+                    $("#contenedorChk").append(chk);
+                    var lbl = $("<label>", { "text": rnd });
+                    $("#contenedorChk").append(lbl);
+                    chk.change(function () {
+                        if ($(this).is(":checked"))
+                            suma += parseInt($(this).val());
+                        else
+                            suma -= parseInt($(this).val());
+                        $("#resultado").text(suma);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
