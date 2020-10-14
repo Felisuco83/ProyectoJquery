@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        function realizarPeticion() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.addEventListener("load", mostrarDatos);
+            xhttp.open("GET", "xml/empleados.xml");
+            xhttp.send();
+        }
+
+        function mostrarDatos() {
+            //TENEMOS DOS PROPIEDADES QUE NOS INDICAN SI
+            //UNA PETICION HA SIDO CORRECTA
+            //RECORDAMOS QUE AQUI ENTRA UNA VEZ QUE HA FINALIZADO
+            //LA PETICION.  YA SEA PETICION CORRECTA O INCORRECTA
+            //TENEMOS DOS PROPIEDADES EN EL OBJETO this
+            //  this.readyState --> Si ha finalizado la lectura (4)
+            //  this.status  --> El código de la respuesta (404) 200
+            var contenido = document.getElementById("contenido");
+            if (this.readyState == 4 && this.status == 200) {
+                //EL OBJETO XMLRequest SE PUEDE MANEJAR CON
+                //LOS METODOS DEL DOM DE HTML
+                //DICHO OBJETO VIENE EN LA PROPIEDAD this.responseXML
+                var docxml = this.responseXML;
+                //VAMOS A BUSCAR UN CONJUNTO DE NODOS PARA AISLAR
+                //LOS APELLIDOS (CASE SENSITIVE)
+                var nodosapellido = docxml.getElementsByTagName("APELLIDO");
+                var html = "<ul>";
+                //NOS HA DEVUELTO UN CONJUNTO DE NODOS
+                for (var i = 0; i < nodosapellido.length; i++) {
+                    //CAPTURAMOS CADA NODO APELLIDO INDIVIDUAL
+                    var nodo = nodosapellido[i];
+                    //<APELLIDO>JIMENEZ</APELLIDO>
+                    //TODO NODO PUEDE TENER A SU VEZ HIJOS
+                    //EXISTE UNA PROPIEDAD PARA ACCEDER
+                    //DE FORMA JERARQUICA A LOS HIJOS
+                    // childNodes[0]
+                    //UNA VEZ QUE TENEMOS ALGUN HIJO, PODEMOS
+                    //MOSTRAR SU VALOR O SEGUIR BAJANDO MAS HIJOS
+                    // nodo.childNodes[0].nodeValue;
+                    // nodo.textContent  --> JIMENEZ
+                    //<APELLIDO>JIMENEZ</APELLIDO>
+                    // nodo.childNodes[0].childNodes[0].nodeValue REY
+                    // nodo.childNodes[1].childNodes[0].nodeValue ANALISTA
+                    // .tagName  NOMBRE DE LA ETIQUETA
+                    // .textContent  --> REYANALISTA
+                    //<DATO>
+                    //<APELLIDO>REY</APELLIDO>
+                    //<OFICIO>ANALISTA</OFICIO>
+                    //</DATO>
+                    //EXISTE UNA PROPIEDAD MAS COMODA CUANDO
+                    //YA ESTAMOS EN UN NODO QUE TIENE CONTENIDO
+                    // SI EL NODO TIENE SUBELEMENTOS, NOS DEVUELVE
+                    //TAMBIEN EL CONTENIDO DE LOS SUBELEMENTOS.
+                    //  .textContent
+                    var apellido = nodo.textContent;
+                    html += "<li>" + apellido + "</li>";
+                }
+
+                html += "</ul>";
+                contenido.innerHTML = html;
+            } else {
+                contenido.innerHTML = "<h1 style='color:red'>"
+                    + "La petición ha sido incorrecta: " + this.status
+                    + "</h1>";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Empleados.xml con Formato</h1>
+    <button type="button" onclick="realizarPeticion()">
+        Leer Empleados.xml Formato
+    </button>
+    <div id="contenido"></div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <p>A</p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("p").click(function () {
+                var colores = ["blue", "yellow", "red", "orange", "fuchsia"];
+                $("p").each(function () {
+                    var aleat = parseInt(Math.random() * colores.length);
+                    var color = colores[aleat];
+                    $(this).css("background-color", color);
+                    $(this).text(color);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

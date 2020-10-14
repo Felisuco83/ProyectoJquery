@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        function realizarPeticion() {
+            // creamos el objeto request
+            var xhttp = new XMLHttpRequest();
+            // cuando se haya realizado la peticion se ejecuta el método load (después de la respuesta)
+            xhttp.addEventListener("load", pintarDatos);
+            xhttp.open("GET", "xml/empleados.xml");
+            xhttp.send();
+        }
+        function pintarDatos() {
+            console.log("Accediendo al servicio");
+            var contenido = document.getElementById("contenido");
+            //para recuperar el objeto sería así
+            //contenido.innerText = this.responseXML;
+            //en texto plano sería así
+            contenido.innerText = this.responseText;
+        }
+    </script>
+</head>
+<body>
+    <h1>Leer documento Empleados.xml simple</h1>
+    <button type="button" onclick="realizarPeticion()"> Leer empleados.xml </button>
+    <div id="contenido"></div>
+</body>
+</html>

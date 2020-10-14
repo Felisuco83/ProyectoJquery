@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .rojo {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("h1").hide();
+            $("h2").click(function () {
+                $(this).fadeOut();
+            });
+            $(".rojo").mouseover(function () {
+                this.fadeOut(5000);
+            });
+            $("#titulo4").click(function () {
+                alert("Pulsado");
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1 class="rojo">Titulo 1</h1>
+    <h2 class="rojo">Titulo 2</h2>
+    <h1 class="rojo">Titulo 3</h1>
+    <h2 id="titulo4">Titulo 4</h2>
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="range" id="rango" min="1" max="10" />
+    <label id="numRango"></label>
+    <div id="contenedorBotones"></div>
+    <div id="contenedorImagenes"></div>
+    <script type="text/javascript">
+        var suma = 0;
+        $(document).ready(function () {
+            $("input[type=range]").change(function () {
+                $("#contenedorBotones").empty();
+                $("#contenedorImagenes").empty();
+                suma = 0;
+                $("#numRango").text($(this).val());
+                for (var i = 0; i < parseInt($(this).val()); i++){
+                    var rnd = Math.floor(Math.random() * (10 - 1)) + 1;
+                    var boton = $("<button>", { "text": "Imagen " + (i+1), "value": i });
+                    $("#contenedorBotones").append(boton);
+                    var img = $("<img>", { "src": "Images/lego_batman.jpg", "data-index": i, "height": "12rem","width": "7rem" });
+                    img.appendTo("#contenedorImagenes");
+                    boton.click(function () {
+                        var imagen = $('img[data-index="'+ $(this).val() + '"]');
+                        if (imagen.attr("src").includes("batman")) {
+                            imagen.attr("src", "Images/lego_joker.jpg");
+                        } else {
+                            imagen.attr("src", "Images/lego_batman.jpg");
+                        }
+                    });
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>

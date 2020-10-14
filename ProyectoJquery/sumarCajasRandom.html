@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .rojo {
+            background-color: red;
+        }
+        .verde {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="caja1" />
+    <input type="text" id="caja2" />
+    <input type="text" id="caja3" />
+    <input type="text" id="caja4" />
+    <input type="text" id="caja5" />
+    <button type="button" id="generarNums">Generar números</button>
+    <button type="button" id="sumarNums">Sumar números</button>
+    <h1 id="resultado"></h1>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("input[type=text]").focusout(function () {
+                $(this).addClass("verde");
+            });
+            $("#generarNums").click(function () {
+                $("input[type=text]").each(function () {
+                    $(this).val(Math.floor(Math.random() * (99 - 1)) + 1);
+                });
+            });
+            $("#sumarNums").click(function () {
+                $sumatorio = 0;
+                $("input[type=text]").each(function () {
+                    $sumatorio += parseInt($(this).val());
+                });
+                $("#resultado").text("El resultado es " + $sumatorio);
+            });
+        });
+    </script>
+</body>
+</html>
