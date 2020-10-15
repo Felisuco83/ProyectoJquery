@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Documento XML simple Jquery</h1>
+    <button type="button" id="readBtn">Cargar emplkeados</button>
+    <hr />
+    <div id="result"></div>
+    <script>
+        $(document).ready(function () {
+            $("#readBtn").click(function () {
+                $.get("xml/empleados.xml", function (data) {
+                    console.log("leyendo...");
+                    var apellidos = $(data).find("APELLIDO");
+                    var html = "<ul>";
+                    apellidos.each(function () {
+                        var ape = $(this).text();
+                        html += "<li>" + ape + "</li>";
+                    });
+                    html += "</ul>";
+                    $("#result").html(html);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

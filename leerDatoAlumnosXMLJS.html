@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var xhttp = new XMLHttpRequest();
+            xhttp.addEventListener("load", function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var studentNodes = this.responseXML.getElementsByTagName("alumno");
+                    for (var student of studentNodes) {
+                        var studentName = student.getElementsByTagName("nombre")[0].textContent;
+                        var studentId = student.getElementsByTagName("idalumno")[0].textContent;
+                        var studentSurname = student.getElementsByTagName("apellidos")[0].textContent;
+                        var studentCalification = student.getElementsByTagName("nota")[0].textContent;
+                        var linkLi = document.createElement("li");
+                        var link = document.createElement("a");
+                        linkLi.appendChild(link);
+                        link.href = "#";
+                        link.dataset.id = studentId;
+                        link.dataset.name = studentName;
+                        link.dataset.surname = studentSurname;
+                        link.dataset.calification = studentCalification;
+                        link.innerText = studentName;
+                        link.addEventListener("click", function () {
+                            document.getElementById("studentDataContainer").innerText = "";
+                            drawStudentData(this.dataset);
+                        });
+                        document.getElementById("studentLinks").appendChild(linkLi);
+
+                    }
+                }
+            });
+            xhttp.open("GET", "xml/alumnos.xml");
+            xhttp.send();
+        }
+
+        function drawStudentData(studentData) {
+            var dataContainer = document.getElementById("studentDataContainer");
+            var studentDataElement = document.createElement("span");
+            studentDataElement.style = "font-weight: bold; font-size: 2rem;";
+            studentDataElement.innerHTML = studentData.name + " " + studentData.surname + "<br/> Nota: " + studentData.calification;
+            dataContainer.appendChild(studentDataElement);
+        }
+
+    </script>
+</head>
+<body>
+        <div id="linkContainer">
+            <ul id="studentLinks">
+
+            </ul>
+        </div>
+        <div id="studentDataContainer"></div>
+</body>
+</html>

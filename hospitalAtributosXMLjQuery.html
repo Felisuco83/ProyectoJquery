@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Atributos XML Jquery</h1>
+    <button type="button" id="loadBtn">Cargar Hospitales</button>
+    <hr />
+    <table id="hospTable" border="1">
+        <thead>
+            <tr>
+                <th>NOMBRE</th>
+                <th>DIRECCION</th>
+                <th>TELEFONO</th>
+                <th>CAMAS</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+            $("#loadBtn").click(function () {
+                $.get("xml/HOSPITAL_ATRIBUTOS.xml", function (data) {
+                    var hospitals = $(data).find("HOSPITAL");
+                    hospitals.each(function () {
+                        var name = $(this).attr("NOMBRE");
+                        var address = $(this).attr("DIRECCION");
+                        var phone = $(this).attr("TELEFONO");
+                        var beds = $(this).attr("NUM_CAMA");
+                        var tr = $("<tr>");
+                        var tdname = $("<td>", { "text": name });
+                        var tdaddress = $("<td>", { "text": address });
+                        var tdphone = $("<td>", { "text": phone });
+                        var tdbeds = $("<td>", { "text": beds });
+                        tr.append(tdname);
+                        tr.append(tdaddress);
+                        tr.append(tdphone);
+                        tr.append(tdbeds);
+                        $("#hospTable tbody").append(tr);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

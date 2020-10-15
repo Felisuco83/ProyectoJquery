@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var xhttp = new XMLHttpRequest();
+            xhttp.addEventListener("load", function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var select = document.getElementById("selectEmpleados");
+                    var nodosApellido = this.responseXML.getElementsByTagName("APELLIDO");
+                    for (var nodoape of nodosApellido) {
+                        var apellido = nodoape.textContent;
+                        var option = document.createElement("option");
+                        option.value = apellido;
+                        option.innerText = apellido;
+                        select.appendChild(option);
+
+                    }
+                }
+            });
+            xhttp.open("GET", "xml/datosempleados.xml");
+            xhttp.send();
+        }
+
+        function realizarPeticion() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.addEventListener("load", leerDatosEmpleado);
+            xhttp.open("GET", "xml/datosempleados.xml");
+            xhttp.send();
+        }
+
+        function leerDatosEmpleado() {
+            if (this.readyState == 4 && this.status == 200) {
+                var select = document.getElementById("selectEmpleados");
+                //ahora sacamos la posición del elemento seleccionado
+                // lo podriamos hacer con un bucle y un selected pero es más rollo
+                var selectedIndex = select.selectedIndex;
+                var docxml = this.responseXML;
+                var nodosEmpleados = docxml.getElementsByTagName("EMPLEADO");
+                var empleado = nodosEmpleados[selectedIndex];
+                var apellido = empleado.getElementsByTagName("APELLIDO")[0].textContent;
+                var oficio = empleado.getElementsByTagName("OFICIO")[0].textContent;
+                document.getElementById("datoOficio").innerText = apellido + ", " + oficio;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1> Búsqueda empleados select JS </h1>
+    <form>
+        <label> Seleccione un empleado </label>
+        <select id="selectEmpleados" onchange="realizarPeticion()">
+
+        </select>
+        <h1 style="color:blue;" id="datoOficio"></h1>
+    </form>
+</body>
+</html>
