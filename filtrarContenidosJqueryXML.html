@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Filtrar contenidos XML </h1>
+    <form>
+        <label> Código apellido </label>
+        <input type="text" id="surnameTxt" />
+        <button type="button" id="surnameBtn"> Buscar apellidos</button><hr />
+        <label> Código Hospital </label>
+        <input type="text" id="hospitalTxt" />
+        <button type="button" id="hospitalBtn"> Buscar hospital </button><hr />
+        <div id="result"></div>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $("#hospitalBtn").click(function () {
+                $.get("xml/HOSPITAL_ATRIBUTOS.xml", function (data) {
+                    var codigo = $("#hospitalTxt").val();
+                    var filtro = "HOSPITAL[HOSPITAL_COD=" + codigo + "]";
+                    var hospitals = $(data).find(filtro);
+                    if (hospitals.length == 0) {
+                        $("#result").html("<h1 style='color:red'") + "No existen resultados: " + codigo + "</h1>";
+                    } else {
+                        //SABEMOS QUE DEVUELVE SÓLO UN HOSPITAL, ASÍ QUE LO RECUPERAMOS
+                        var hospital = hospitals.first();
+                        $("#result").html("<h1 style='color:blue'>" + "Nombre: " + hospital.attr("NOMBRE") + ", Dirección: "
+                            + hospital.attr("DIRECCION") + "</h1>");
+                    }
+                });
+            });
+
+            $("#surnameBtn").click(function () {
+                $.get("xml/datosempleados.xml", function (data) {
+                    var surname = $("#surnameTxt").val().toUpperCase();
+                    var filtro = "APELLIDO:contains(" + surname + ")";
+                    var employees = $(data).find(filtro);
+                    if (employees.length == 0) {
+                        $("#result").html("<h1 style='color:red'>" + "No existen resultados: " + surname + "</h1>");
+                    } else {
+                        //SABEMOS QUE DEVUELVE SÓLO UN HOSPITAL, ASÍ QUE LO RECUPERAMOS
+                        var html = "";
+                        employees.each(function () {
+                            var surname = $(this).text();
+                            html += "<h2>" + surname + "</h2>";
+
+                        });
+                        $("#result").html(html);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
