@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Conjunto objetos Json Javascript </h1>
+    <button type="button" id="customerBtn" onclick="doRequest()"> Leer JSON con XMLHttpRequest </button><hr />
+    <div id="result"></div>
+    <script type="text/javascript">
+        function doRequest() {
+            var xhr = new XMLHttpRequest();
+            //en vez del load se puede utilizar este, mejor el load y valorar si ha ido bien con el status
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var plainText = this.responseText;
+                    var data = JSON.parse(plainText);
+                    readJsonData(data);
+                }
+            }
+            xhr.open("GET", "json/clientessimples.json", true);
+            xhr.send();
+        }
+        function readJsonData(data) {
+            // LOS OBJETOS JSON SE MANEJAN IGUAL QUE EN JQUERY
+            for (var i = 0; i < data.clientes.length; i++) {
+                var h1 = document.createElement("h1");
+                var customer = data.clientes[i];
+                h1.innerText = customer.nombre;
+                document.getElementById("result").appendChild(h1);
+            }
+        }
+    </script>
+</body>
+</html>

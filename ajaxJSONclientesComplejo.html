@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Conjunto objetos Json Jquery </h1>
+    <button type="button" id="customerBtn"> Leer JSON con AJAX </button><hr />
+    <div id="result"></div>
+    <script>
+        $(document).ready(function () {
+            $("#customerBtn").click(function () {
+                $.ajax({
+                    url: "JSON/clientessimples.json", "method": "GET",
+                    success: function (data) {
+                         $.each(data.clientes, function (index, customer) {
+                            var h1 = $("<h1>", { "text": "Indice: " + index + ", Nombre: " + customer.nombre });
+                            h1.appendTo($("#result"));
+                        });
+                }});
+            });
+        });
+    </script>
+</body>
+</html>

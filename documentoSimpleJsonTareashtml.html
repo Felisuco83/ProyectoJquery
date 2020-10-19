@@ -12,12 +12,22 @@
     <div id="result"></div>
     <script>
         $(document).ready(function () {
-            $("#hospitalBtn").click(function () {
-
+            $("#btnGet").click(function () {
+                $.getJSON("JSON/tareas.json", function (data) {
+                    $.each(data, function (key, value) {
+                        var h1 = $("<h1>", { "text": "Clave: " + key + ", Valor: " + value });
+                        h1.appendTo($("#result"));
+                    });
+                });
             });
 
-            $("#surnameBtn").click(function () {
-
+            $("#hospitalBtn").click(function () {
+                  $.ajax({url: "JSON/tareas.json", "method": "GET", success: function(data){
+                     $.each(data, function (key, value) {
+                        var h1 = $("<h1>", { "text": "Clave: " + key + ", Valor: " + value });
+                        h1.appendTo($("#result"));
+                    });
+                }});
             });
         });
     </script>

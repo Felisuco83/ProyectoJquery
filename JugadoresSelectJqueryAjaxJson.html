@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .jugador {
+            color:blue;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1> Conjunto objetos Json Jquery </h1>
+    <select id="playersSelect"></select>
+    <div id="result"></div>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                    url: "JSON/jugadores.json", "method": "GET",
+                    success: function (data) {
+                         $.each(data.jugadores, function (index, player) {
+                             var option = $("<option>", { value: player.nombre, text: player.nombre, "data-imgsrc": player.imagen, "data-position": player.posicion, "data-age": player.edad });
+                             option.appendTo($("#playersSelect"));
+                        });
+                    }
+            });
+            $("#playersSelect").change(function () {
+                $("#result").empty();
+                var selected = $("option:selected", this);
+                var span = $("<span>", { "class": "jugador", "text": "Nombre: " + selected.val() + ", Posición: " + selected.data("position") + ", Edad: " + selected.data("age") });
+                var img = $("<img>", { src: selected.data("imgsrc") });
+                span.appendTo($("#result"));
+                $("<br/>").appendTo($("#result"));
+                img.appendTo($("#result"));
+            });
+        });
+    </script>
+</body>
+</html>
