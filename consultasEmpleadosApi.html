@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Acceso Servicios Api Departamentos + empleados</h1>
+    <hr />
+    <table border="1" id="tabla">
+        <thead>
+            <tr>
+                <th>NUMERO</th>
+                <th>NOMBRE</th>
+                <th>LOCALIDAD</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <hr />
+    <table border="1" id="tablaempleado" style="display:none;">
+        <thead>
+            <tr>
+                <th>ID EMPLEADO</th>
+                <th>APELLIDO</th>
+                <th>OFICIO</th>
+                <th>SALARIO</th>
+                <th>DEPARTAMENTO</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2 id="mensaje"></h2>
+    <script>
+        var urlapi = "https://apicruddepartamentoscore.azurewebsites.net";
+        var urlapi2 = "https://apiempleadosspgs.azurewebsites.net/api/Empleados/EmpleadosDepartamento/";
+        $(document).ready(function () {
+            cargarDepartamentos();
+        });
+        function cargarDepartamentos() {
+            var request = "/api/departamentos";
+            $.getJSON(urlapi + request, function (data) {
+                $.each(data, function (index, dept) {
+                    var tr = $("<tr>", {"data-id": dept.numero});
+                    var tdNum = $("<td>", { text: dept.numero, class: "clickable" });
+                    var tdNom = $("<td>", { text: dept.nombre, class: "clickable" });
+                    var tdLoc = $("<td>", { text: dept.localidad, class: "clickable" });
+                    tr.append(tdNum).append(tdNom).append(tdLoc);
+                    $(tr).on('click', function (event) {
+                        $("#tablaempleado tbody").empty();
+                        $.ajax({
+                            "url": urlapi2 + $(this).data("id")
+                            , "type": "GET"
+                            , "contentType": "application/json"
+                            , success: function (empleados) {
+                                for (var empleado of empleados) {
+                                    var trEmp = $("<tr>");
+                                    $.each(empleado, function (k, v) {
+                                        var td = $("<td>", { text: v });
+                                        td.appendTo(trEmp);
+                                    });
+                                    trEmp.appendTo("#tablaempleado tbody");
+                                }
+                                $("#tablaempleado").show();
+                            }
+                        });
+                    });
+                    $("#tabla tbody").append(tr);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
