@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1 id="response"></h1>
+        <label>CP: </label>
+        <input type="text" id="codigoPostal" />
+        <button id="cpBtn" type="button"> Validar CP</button>
+        <br />
+        <label>NIF: </label>
+        <input type="text" id="cajanif" />
+        <button id="nifBtn" type="button"> Validar NIF </button>
+        <form>
+            <label>Email</label>
+            <input type="text" id="cajaemail" type="email" />
+            <input type="text" id="cajaemail" pattern="/[a-zA-Z]/" />
+            <button id="nifBtn" type="submit"> Enviar </button>
+            <button type="button"> Validar </button>
+        </form>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $("#cpBtn").click(function () {
+            var expresion = new RegExp("^\\d{5}$");
+            var cp = $("#codigoPostal").val();
+            var respuesta = expresion.test(cp);
+            $("#response").text(respuesta.toString().toUpperCase());
+        });
+        $("#nifBtn").click(function () {
+            var expresion = /^\d{8}[A-Z]{1}$/;
+            var nif = $("#cajanif").val();
+            var respuesta = expresion.test(nif);
+            $("#response").text(respuesta.toString().toUpperCase());
+        });
+    </script>
+</body>
+</html>
