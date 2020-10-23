@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Acceso Servicios Api empleados - Herencia Version</h1>
+    <select id="selectOficios">
+    </select>
+    <table border="1" id="tablaempleado" style="display:none;">
+        <thead>
+            <tr>
+                <th>ID EMPLEADO</th>
+                <th>APELLIDO</th>
+                <th>OFICIO</th>
+                <th>SALARIO</th>
+                <th>DEPARTAMENTO</th>
+                <th>SALARIO ANUAL</th>
+                <th>AÑOS EN LA EMPRESA</th>
+                <th>SALARIO COBRADO</th>
+                <!--Los que queden-->
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2 id="mensaje"></h2>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/empleadosHerencia.js"></script>
+    <script>
+        var urlapi = "https://apiempleadosspgs.azurewebsites.net/api/Empleados";
+        var urlapi2 = "https://apiempleadosspgs.azurewebsites.net/api/Empleados/EmpleadosDepartamento/";
+        $(document).ready(function () {
+            cargarOficios();
+            $("#selectOficios").change(function () {
+                var arrayEmpleados = new Array();
+                $.ajax({
+                    "url": urlapi
+                    , "type": "GET"
+                    , "success": function (data) {
+                        $.each(data, function (k, v) {
+                            if ($("#option:selected", "#selectOficios").text().includes(v.oficio)) {
+                                var empleado = new Empleado(v.idEmpleado, v.apellido, v.oficio, v.salario, v.fechaalta);
+                                arrayEmpleados.push(empleado);
+                            }
+                            $.each(arrayEmpleados, function () {
+                                $(this)
+                            });
+                        });
+                    }
+                });
+            });
+        });
+        function cargarOficios() {
+            var arrayOficios = new Array();
+            $.ajax({
+                "url": urlapi
+                , "type": "GET"
+                , "success": function (data) {
+                    $.each(data, function (k, v) {
+                        if (!arrayOficios.includes(v.oficio)) {
+                            arrayOficios.push(v.oficio);
+                        }
+                    });
+                    for (var oficio of arrayOficios) {
+                        var option = $("<option>", { text: oficio });
+                        $("#selectOficios").append(option);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

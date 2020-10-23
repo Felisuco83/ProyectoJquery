@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Almacenamiento Web</h1>
+    <form>
+        <label>Marca: </label>
+        <input type="text" id="tmBox" /><br />
+        <label>Modelo: </label>
+        <input type="text" id="modelBox" /><br />
+        <ul>
+            <li><input type="radio" name="storage" value="0"/>Localstorage</li>
+            <li><input type="radio" name="storage" value="1"/>Sessionstorage</li>
+        </ul>
+        <button type="button" id="saveBtn">Guardar datos</button>
+        <button type="button" id="readBtn">Leer datos</button>
+        <button type="button" id="delBtn">Eliminar datos</button>
+    </form>
+    <h1 id="result" style="color:red;"></h1>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#saveBtn").click(function () {
+                var valor = $("input[name='storage']:checked").val();
+                var marca = $("#tmBox").val();
+                var modelo = $("#modelBox").val();
+                if (valor == 0) {
+                    localStorage.setItem("marca", marca);
+                    // localStorage["marca"] = marca;
+                    localStorage.setItem("modelo", modelo);
+                    $("#result").text("Guardado en LOCAL");
+                } else {
+                    sessionStorage.setItem("marca", marca);
+                    sessionStorage.setItem("modelo", modelo);
+                    $("#result").text("Guardado en SESSION");
+                }
+            });
+            $("#readBtn").click(function () {
+                var valor = $("input[name='storage']:checked").val();
+                var marca = "";
+                var modelo = "";
+                if (valor == 0) {
+                    marca = localStorage.getItem("marca");
+                    // localStorage["marca"];
+                    modelo = localStorage.getItem("modelo");
+                    $("#result").text("Marca: " + marca + " ,Modelo " + modelo);
+                } else {
+                    marca = sessionStorage.getItem("marca");
+                    // localStorage["marca"];
+                    modelo = sessionStorage.getItem("modelo");
+                    $("#result").text("Marca: " + marca + " ,Modelo " + modelo);
+                }
+            });
+            $("#delBtn").click(function () {
+                var valor = $("input[name='storage']:checked").val();
+                if (valor == 0) {
+                    localStorage.clear();
+                    $("#result").text("LOCAL eliminado");
+                } else {
+                    sessionStorage.clear();
+                    $("#result").text("SESSION eliminado");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

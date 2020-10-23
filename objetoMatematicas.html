@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1> Ejemplo creacion de objetos</h1>
+    <form>
+        <label>Número: </label>
+        <input type="number" id="cajanumero"/>
+        <button type="button" id="botondoble">Mostrar doble</button>
+        <h1 id="result" style="color:red;"></h1>
+    </form>
+    <h1 style="color:red;" id="resultado"></h1>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/objetoMatematicas.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#botondoble").click(function () {
+                var num = parseInt($("#cajanumero").val());
+                var mates = new Matematicas(num);
+                console.log("Número almacenado:  " + mates.numero);
+                mates.generarDoble();
+                $("#resultado").text("Resultado = " + mates.doble);
+            });
+        });
+    </script>
+</body>
+</html>
